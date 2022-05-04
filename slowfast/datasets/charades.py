@@ -86,9 +86,14 @@ class Charades(torch.utils.data.Dataset):
             path_to_file, self.cfg.DATA.PATH_PREFIX, return_list=True
         )
 
+        print(self._labels)
+        print(self._num_clips)
+
         if self.mode != "train":
             # Form video-level labels from frame level annotations.
             self._labels = utils.convert_to_video_level_labels(self._labels)
+
+        # print(self._labels)
 
         self._path_to_videos = list(
             chain.from_iterable(
@@ -165,6 +170,7 @@ class Charades(torch.utils.data.Dataset):
             time index (zero): The time index is currently not supported.
             {} extra data, currently not supported
         """
+        print("GETTTTTTTTTGIN", index)
         short_cycle_idx = None
         # When short cycle is used, input index is a tupple.
         if isinstance(index, tuple):
@@ -220,12 +226,16 @@ class Charades(torch.utils.data.Dataset):
             )
         )
 
+        print([self._labels[index][i] for i in range(seq[0], seq[-1] + 1)])
+        print(seq)
+
         label = utils.aggregate_labels(
             [self._labels[index][i] for i in range(seq[0], seq[-1] + 1)]
         )
         label = torch.as_tensor(
             utils.as_binary_vector(label, self.cfg.MODEL.NUM_CLASSES)
         )
+
 
         # Perform color normalization.
         frames = utils.tensor_normalize(

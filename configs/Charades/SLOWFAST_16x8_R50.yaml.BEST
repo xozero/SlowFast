@@ -43,10 +43,10 @@ BN:
   NORM_TYPE: sync_batchnorm
   NUM_SYNC_DEVICES: 1
 SOLVER:
-  BASE_LR: 0.0125
+  BASE_LR: 0.0175
   LR_POLICY: steps_with_relative_lrs
   LRS: [1, 0.1, 0.01, 0.001, 0.0001, 0.00001]
-  STEPS: [0, 50, 100]
+  STEPS: [0, 241, 249]
   MAX_EPOCH: 300
   MOMENTUM: 0.9
   WEIGHT_DECAY: 1e-4

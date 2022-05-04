@@ -118,6 +118,8 @@ def perform_test(test_loader, model, test_meter, cfg, writer=None):
         else:
             # Perform the forward pass.
             preds = model(inputs)
+            print("PREEEEEEEEEEEDSSSSSSSSSS")
+            print(preds)
 
         # Gather all the predictions across all the devices to perform ensemble.
         if cfg.NUM_GPUS > 1:

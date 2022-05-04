@@ -55,6 +55,7 @@ def train_epoch(
     model.train()
     train_meter.iter_tic()
     data_size = len(train_loader)
+    print(data_size)
 
     if cfg.MIXUP.ENABLE:
         mixup_fn = MixUp(
@@ -151,6 +152,7 @@ def train_epoch(
         else:
             # Compute the loss.
             loss = loss_fun(preds, labels)
+            print(">>>>>>", preds, labels, loss)
 
         # check Nan Loss.
         misc.check_nan_losses(loss)
@@ -243,6 +245,11 @@ def train_epoch(
             )
             # write to tensorboard format if available.
             if writer is not None:
+                if not top1_err:
+                    top1_err = 0
+                if not top5_err:
+                    top5_err = 0
+                print(loss, lr, top1_err, top5_err)
                 writer.add_scalars(
                     {
                         "Train/loss": loss,
@@ -627,6 +634,9 @@ def train(cfg):
         if cfg.BN.USE_PRECISE_STATS
         else None
     )
+
+    print(len(train_loader))
+    # import pdb; pdb.set_trace()
 
     if (
         cfg.TASK == "ssl"
